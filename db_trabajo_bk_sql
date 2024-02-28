@@ -1,0 +1,219 @@
+-- MariaDB dump 10.19  Distrib 10.4.28-MariaDB, for Win64 (AMD64)
+--
+-- Host: localhost    Database: db_trabajo
+-- ------------------------------------------------------
+-- Server version	10.4.28-MariaDB
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `inventarios`
+--
+
+DROP TABLE IF EXISTS `inventarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `inventarios` (
+  `id_inventario` char(36) NOT NULL DEFAULT uuid(),
+  `cantidad_disponible` int(11) DEFAULT NULL,
+  `fecha_ingreso` date DEFAULT NULL,
+  `id_producto` char(36) NOT NULL,
+  PRIMARY KEY (`id_inventario`),
+  KEY `id_producto` (`id_producto`),
+  CONSTRAINT `inventarios_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `inventarios`
+--
+
+LOCK TABLES `inventarios` WRITE;
+/*!40000 ALTER TABLE `inventarios` DISABLE KEYS */;
+INSERT INTO `inventarios` VALUES ('a8d9eedb-d662-11ee-8c66-d45d6462d9c3',100,'2024-02-28','7e1f14ae-d662-11ee-8c66-d45d6462d9c3'),('a8da03b6-d662-11ee-8c66-d45d6462d9c3',120,'2024-02-28','7e1f1faa-d662-11ee-8c66-d45d6462d9c3'),('a8da0482-d662-11ee-8c66-d45d6462d9c3',80,'2024-02-28','7e1f204e-d662-11ee-8c66-d45d6462d9c3'),('a8da04ec-d662-11ee-8c66-d45d6462d9c3',150,'2024-02-28','7e1f20b4-d662-11ee-8c66-d45d6462d9c3'),('a8da0547-d662-11ee-8c66-d45d6462d9c3',90,'2024-02-28','7e1f211a-d662-11ee-8c66-d45d6462d9c3'),('a8da059d-d662-11ee-8c66-d45d6462d9c3',110,'2024-02-28','7e1f216f-d662-11ee-8c66-d45d6462d9c3'),('a8da05f7-d662-11ee-8c66-d45d6462d9c3',70,'2024-02-28','7e1f21bb-d662-11ee-8c66-d45d6462d9c3'),('a8da6d11-d662-11ee-8c66-d45d6462d9c3',130,'2024-02-28','7e1f2206-d662-11ee-8c66-d45d6462d9c3'),('a8da6dd6-d662-11ee-8c66-d45d6462d9c3',100,'2024-02-28','7e1f2250-d662-11ee-8c66-d45d6462d9c3'),('a8da6e37-d662-11ee-8c66-d45d6462d9c3',140,'2024-02-28','7e1f2297-d662-11ee-8c66-d45d6462d9c3');
+/*!40000 ALTER TABLE `inventarios` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `movimientos_inventarios`
+--
+
+DROP TABLE IF EXISTS `movimientos_inventarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `movimientos_inventarios` (
+  `id_movimiento_inventario` char(36) NOT NULL DEFAULT uuid(),
+  `id_inventario` char(36) NOT NULL,
+  `tipo_movimiento` enum('Entrada','Salida') NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `fecha_movimiento` date NOT NULL,
+  PRIMARY KEY (`id_movimiento_inventario`),
+  KEY `id_inventario` (`id_inventario`),
+  CONSTRAINT `movimientos_inventarios_ibfk_1` FOREIGN KEY (`id_inventario`) REFERENCES `productos` (`id_producto`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `movimientos_inventarios`
+--
+
+LOCK TABLES `movimientos_inventarios` WRITE;
+/*!40000 ALTER TABLE `movimientos_inventarios` DISABLE KEYS */;
+INSERT INTO `movimientos_inventarios` VALUES ('dbb8472d-d662-11ee-8c66-d45d6462d9c3','7e1f14ae-d662-11ee-8c66-d45d6462d9c3','Entrada',50,'2024-02-28'),('dbb84bc2-d662-11ee-8c66-d45d6462d9c3','7e1f1faa-d662-11ee-8c66-d45d6462d9c3','Salida',30,'2024-02-28'),('dbb84c68-d662-11ee-8c66-d45d6462d9c3','7e1f204e-d662-11ee-8c66-d45d6462d9c3','Entrada',40,'2024-02-28'),('dbb84ceb-d662-11ee-8c66-d45d6462d9c3','7e1f20b4-d662-11ee-8c66-d45d6462d9c3','Salida',20,'2024-02-28'),('dbb84d66-d662-11ee-8c66-d45d6462d9c3','7e1f211a-d662-11ee-8c66-d45d6462d9c3','Entrada',60,'2024-02-28'),('dbb84dd1-d662-11ee-8c66-d45d6462d9c3','7e1f216f-d662-11ee-8c66-d45d6462d9c3','Salida',25,'2024-02-28'),('dbb84e1b-d662-11ee-8c66-d45d6462d9c3','7e1f21bb-d662-11ee-8c66-d45d6462d9c3','Entrada',35,'2024-02-28'),('dbb8c444-d662-11ee-8c66-d45d6462d9c3','7e1f2206-d662-11ee-8c66-d45d6462d9c3','Salida',15,'2024-02-28'),('dbb8c52e-d662-11ee-8c66-d45d6462d9c3','7e1f2250-d662-11ee-8c66-d45d6462d9c3','Entrada',45,'2024-02-28'),('dbb8c5a8-d662-11ee-8c66-d45d6462d9c3','7e1f2297-d662-11ee-8c66-d45d6462d9c3','Salida',10,'2024-02-28');
+/*!40000 ALTER TABLE `movimientos_inventarios` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER trigger_actualizar_inventario AFTER INSERT ON movimientos_inventarios
+FOR EACH ROW
+BEGIN
+    DECLARE cantidad_movimiento INT;
+    SET cantidad_movimiento = NEW.cantidad;
+
+    IF NEW.tipo_movimiento = 'Entrada' THEN
+        UPDATE inventarios
+        SET cantidad_disponible = cantidad_disponible + cantidad_movimiento
+        WHERE id_inventario = NEW.id_inventario;
+    ELSEIF NEW.tipo_movimiento = 'Salida' THEN
+        UPDATE inventarios
+        SET cantidad_disponible = cantidad_disponible - cantidad_movimiento
+        WHERE id_inventario = NEW.id_inventario
+        AND cantidad_disponible >= cantidad_movimiento;
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `productos`
+--
+
+DROP TABLE IF EXISTS `productos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `productos` (
+  `id_producto` char(36) NOT NULL DEFAULT uuid(),
+  `id_categoria` char(36) NOT NULL,
+  `nombre_producto` varchar(50) NOT NULL,
+  `descripcion_producto` varchar(255) NOT NULL,
+  `precio_unitario` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`id_producto`),
+  KEY `fk_prodcutos_categoria` (`id_categoria`),
+  CONSTRAINT `fk_prodcutos_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `tb_categorias` (`id_categoria`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `productos`
+--
+
+LOCK TABLES `productos` WRITE;
+/*!40000 ALTER TABLE `productos` DISABLE KEYS */;
+INSERT INTO `productos` VALUES ('7e1f14ae-d662-11ee-8c66-d45d6462d9c3','f3122ee4-d661-11ee-8c66-d45d6462d9c3','Producto 1','Descripción 1',10.50),('7e1f1faa-d662-11ee-8c66-d45d6462d9c3','','Producto 2','Descripción 2',20.75),('7e1f204e-d662-11ee-8c66-d45d6462d9c3','f31241c4-d661-11ee-8c66-d45d6462d9c3','Producto 3','Descripción 3',15.25),('7e1f20b4-d662-11ee-8c66-d45d6462d9c3','f31241ee-d661-11ee-8c66-d45d6462d9c3','Producto 4','Descripción 4',30.00),('7e1f211a-d662-11ee-8c66-d45d6462d9c3','f3124222-d661-11ee-8c66-d45d6462d9c3','Producto 5','Descripción 5',18.90),('7e1f216f-d662-11ee-8c66-d45d6462d9c3','f3124259-d661-11ee-8c66-d45d6462d9c3','Producto 6','Descripción 6',25.60),('7e1f21bb-d662-11ee-8c66-d45d6462d9c3','f312428b-d661-11ee-8c66-d45d6462d9c3','Producto 7','Descripción 7',12.75),('7e1f2206-d662-11ee-8c66-d45d6462d9c3','f31242cf-d661-11ee-8c66-d45d6462d9c3','Producto 8','Descripción 8',22.00),('7e1f2250-d662-11ee-8c66-d45d6462d9c3','f3124313-d661-11ee-8c66-d45d6462d9c3','Producto 9','Descripción 9',28.50),('7e1f2297-d662-11ee-8c66-d45d6462d9c3','f3124342-d661-11ee-8c66-d45d6462d9c3','Producto 10','Descripción 10',35.25);
+/*!40000 ALTER TABLE `productos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `proveedores`
+--
+
+DROP TABLE IF EXISTS `proveedores`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `proveedores` (
+  `id_proveedor` char(36) NOT NULL DEFAULT uuid(),
+  `nombre_proveedor` varchar(50) NOT NULL,
+  `direccion_proveedor` varchar(50) NOT NULL,
+  `telefono_proveedor` varchar(10) NOT NULL,
+  PRIMARY KEY (`id_proveedor`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `proveedores`
+--
+
+LOCK TABLES `proveedores` WRITE;
+/*!40000 ALTER TABLE `proveedores` DISABLE KEYS */;
+INSERT INTO `proveedores` VALUES ('066cd4dc-d662-11ee-8c66-d45d6462d9c3','Proveedor 1','Dirección 1','1234567890'),('066ce22f-d662-11ee-8c66-d45d6462d9c3','Proveedor 2','Dirección 2','2345678901'),('066ce33e-d662-11ee-8c66-d45d6462d9c3','Proveedor 3','Dirección 3','3456789012'),('066ce37b-d662-11ee-8c66-d45d6462d9c3','Proveedor 4','Dirección 4','4567890123'),('066ce3bb-d662-11ee-8c66-d45d6462d9c3','Proveedor 5','Dirección 5','5678901234'),('066ce3f9-d662-11ee-8c66-d45d6462d9c3','Proveedor 6','Dirección 6','6789012345'),('066ce449-d662-11ee-8c66-d45d6462d9c3','Proveedor 7','Dirección 7','7890123456'),('066ce492-d662-11ee-8c66-d45d6462d9c3','Proveedor 8','Dirección 8','8901234567'),('066ce4cd-d662-11ee-8c66-d45d6462d9c3','Proveedor 9','Dirección 9','9012345678'),('066ce505-d662-11ee-8c66-d45d6462d9c3','Proveedor 10','Dirección 10','0123456789');
+/*!40000 ALTER TABLE `proveedores` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tb_categorias`
+--
+
+DROP TABLE IF EXISTS `tb_categorias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_categorias` (
+  `id_categoria` char(36) NOT NULL DEFAULT uuid(),
+  `nombre_categoria` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_categoria`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_categorias`
+--
+
+LOCK TABLES `tb_categorias` WRITE;
+/*!40000 ALTER TABLE `tb_categorias` DISABLE KEYS */;
+INSERT INTO `tb_categorias` VALUES ('','Categoría 2'),('f3122ee4-d661-11ee-8c66-d45d6462d9c3','Categoría 1'),('f31241c4-d661-11ee-8c66-d45d6462d9c3','Categoría 3'),('f31241ee-d661-11ee-8c66-d45d6462d9c3','Categoría 4'),('f3124222-d661-11ee-8c66-d45d6462d9c3','Categoría 5'),('f3124259-d661-11ee-8c66-d45d6462d9c3','Categoría 6'),('f312428b-d661-11ee-8c66-d45d6462d9c3','Categoría 7'),('f31242cf-d661-11ee-8c66-d45d6462d9c3','Categoría 8'),('f3124313-d661-11ee-8c66-d45d6462d9c3','Categoría 9'),('f3124342-d661-11ee-8c66-d45d6462d9c3','Categoría 10');
+/*!40000 ALTER TABLE `tb_categorias` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tb_proveedores`
+--
+
+DROP TABLE IF EXISTS `tb_proveedores`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_proveedores` (
+  `id_proveedor` char(36) NOT NULL DEFAULT uuid(),
+  `nombre_proveedor` varchar(50) NOT NULL,
+  `direccion_proveedor` varchar(50) NOT NULL,
+  `telefono_proveedor` varchar(10) NOT NULL,
+  PRIMARY KEY (`id_proveedor`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_proveedores`
+--
+
+LOCK TABLES `tb_proveedores` WRITE;
+/*!40000 ALTER TABLE `tb_proveedores` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_proveedores` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2024-02-28 12:00:58
